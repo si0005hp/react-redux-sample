@@ -7,6 +7,7 @@ import { routerReducer, routerMiddleware } from 'react-router-redux';
 import logger from 'redux-logger';
 import tasksReducer from '../reducers/tasks';
 import storageMiddleware from '../middleware';
+import thunk from 'redux-thunk';
 
 
 const savedState = JSON.parse(localStorage.getItem('app-state'));
@@ -21,7 +22,8 @@ export default function createStore(history) {
     applyMiddleware(
       logger,
       routerMiddleware(history),
-      storageMiddleware
+      storageMiddleware,
+      thunk
     )
   );
 }

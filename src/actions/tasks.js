@@ -11,3 +11,8 @@ export const addTask = (task) => ({
     task
   }
 });
+
+export const addAndClearTask = (task) => (dispatch) => {
+  dispatch(addTask(task));
+  dispatch(inputTask(''));
+};
