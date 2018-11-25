@@ -6,6 +6,10 @@ import {
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 import logger from 'redux-logger';
 import tasksReducer from '../reducers/tasks';
+import storageMiddleware from '../middleware';
+
+
+const savedState = JSON.parse(localStorage.getItem('app-state'));
 
 export default function createStore(history) {
   return reduxCreateStore(
@@ -13,9 +17,11 @@ export default function createStore(history) {
       tasks: tasksReducer,
       router: routerReducer,
     }),
+    savedState ? savedState : tasksReducer(undefined, { type: 'Init' }),
     applyMiddleware(
       logger,
-      routerMiddleware(history)
+      routerMiddleware(history),
+      storageMiddleware
     )
   );
 }
